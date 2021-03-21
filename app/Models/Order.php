@@ -23,4 +23,10 @@ class Order extends Model
 
         return $number;
     }
+
+    public function orderDetails()
+    {
+        return $this->belongsToMany(Product::class, 'order_details');
+    }
+
 }

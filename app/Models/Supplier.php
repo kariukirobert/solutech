@@ -10,4 +10,11 @@ class Supplier extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $fillable = ['name'];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'supplier_products', 'supply_id', 'product_id');
+    }
 }
