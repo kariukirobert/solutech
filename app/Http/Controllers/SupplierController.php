@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class SupplierController extends Controller
 {
@@ -16,7 +16,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Order::all();
+        $suppliers = Supplier::latest()->get();
         return SupplierResource::collection($suppliers);
     }
 
