@@ -74,6 +74,5 @@ class SupplierController extends Controller
     {
         $supplier->delete();
         return response()->json([], Response::HTTP_NO_CONTENT);
-
     }
 }
