@@ -1883,24 +1883,136 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "orders",
   data: function data() {
     return {
-      products: {}
+      orders: {},
+      products: {},
+      add_order: true,
+      form: {
+        products: []
+      },
+      errors: {}
     };
   },
   mounted: function mounted() {
+    this.getOrders();
     this.getProducts();
   },
   methods: {
-    getProducts: function getProducts() {// return this.$store.getters.products;
+    getOrders: function getOrders() {
+      var _this = this;
+
+      axios.get('/api/orders').then(function (response) {
+        _this.orders = response.data.data.map(function (order) {
+          return {
+            id: order.id,
+            order_number: order.order_number,
+            // products: order.products.map(({name}) => ({name})),
+            products: order.products.map(function (product) {
+              return product.name;
+            }).join(", "),
+            created_at: order.created_at,
+            updated_at: order.updated_at
+          };
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
-    deleteProduct: function deleteProduct(id) {
-      this.$store.dispatch('deleteProduct', id);
+    getProducts: function getProducts() {
+      var _this2 = this;
+
+      axios.get('/api/products').then(function (response) {
+        _this2.products = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    addOrder: function addOrder() {
+      var _this3 = this;
+
+      axios.post('/api/orders', this.form).then(function (response) {
+        window.location.reload();
+      })["catch"](function (error) {
+        _this3.errors = error.response.data.errors;
+        console.log(error);
+      });
+    },
+    editOrder: function editOrder(id) {
+      var _this4 = this;
+
+      axios.get("/api/orders/".concat(id)).then(function (response) {
+        _this4.form.name = response.data.data.name;
+        _this4.form.quantity = response.data.data.quantity;
+        _this4.form.description = response.data.data.description;
+        _this4.form.order_id = id;
+        _this4.add_order = false;
+        $('#orderModal').modal('toggle');
+      })["catch"](function (error) {
+        _this4.errors = error.response.data.errors;
+        console.log(error);
+      });
+    },
+    updateOrder: function updateOrder(id) {
+      var _this5 = this;
+
+      axios.put("/api/orders/".concat(id), this.form).then(function (response) {
+        window.location.reload();
+      })["catch"](function (error) {
+        _this5.errors = error.response.data.errors;
+        console.log(error);
+      });
+    },
+    deleteOrder: function deleteOrder(id) {
+      axios["delete"]("/api/orders/".concat(id)).then(function (response) {// window.location.reload();
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
-  },
-  computed: {}
+  }
 });
 
 /***/ }),
@@ -38028,73 +38140,196 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "card-body table-responsive" }, [
-        _c("table", { staticClass: "table table-bordered table-hover" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.products, function(product, index) {
-              return _c("tr", { key: product.id }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(" " + _vm._s(index + 1))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(product.order_number))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-center" }, [
-                  _vm._v(_vm._s(product.products))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.viewProduct(product.id)
-                        }
-                      }
-                    },
-                    [_vm._v("View")]
-                  ),
+        _c(
+          "table",
+          { staticClass: "table table-bordered table-hover table-stripped" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.orders, function(order, index) {
+                return _c("tr", { key: order.id }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v(" " + _vm._s(index + 1))
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.editProduct(product.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Edit")]
-                  ),
+                  _c("td", [_vm._v(_vm._s(order.order_number))]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger n-btn-sm btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteProduct(product.id)
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(order.products))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.editOrder(order.id)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Delete")]
-                  )
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger n-btn-sm btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteOrder(order.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "orderModal",
+          tabindex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "card mt-1" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col-md-12" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "name" }
+                          },
+                          [_vm._v("Select Products")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.products,
+                                expression: "form.products"
+                              }
+                            ],
+                            staticClass: "custom-select",
+                            class: { "is-invalid": _vm.errors.products },
+                            attrs: { multiple: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "products",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.products, function(product, index) {
+                            return _c(
+                              "option",
+                              { key: index, domProps: { value: product.id } },
+                              [_vm._v(_vm._s(product.name))]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _vm.errors.products
+                          ? _c("small", { staticClass: "invalid-feedback" }, [
+                              _vm._v(_vm._s(_vm.errors.products[0]))
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-row" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "form-group col-md-12 mt-3 text-center"
+                        },
+                        [
+                          _vm.add_order
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary help-block col-4",
+                                  attrs: { type: "submit" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.addOrder($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Submit Order ")]
+                              )
+                            : _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary help-block col-4",
+                                  attrs: { type: "submit" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.updateOrder(_vm.form.order_id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Update Order ")]
+                              )
+                        ]
+                      )
+                    ])
+                  ])
                 ])
               ])
-            }),
-            0
-          )
+            ])
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -38108,12 +38343,16 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c(
-        "a",
+        "button",
         {
-          staticClass: "btn btn-action float-right btn-sm mt-1",
-          attrs: { href: "javascrit:;" }
+          staticClass: "btn btn-primary float-right btn-sm mt-1",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#orderModal"
+          }
         },
-        [_vm._v(" Add Order")]
+        [_vm._v("\n                Add Order\n            ")]
       )
     ])
   },
@@ -38133,6 +38372,31 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "action" }, [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Add Order")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]

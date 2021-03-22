@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {
@@ -27,9 +28,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request['order_number'] = Order::generateOrderNumber();
-        $supplier = Supplier::create($request->input());
-        return new SupplierResource($supplier);
+        $order = Order::create(['order_number' => Order::generateOrderNumber()]);
+        // return $request->input();
+        $order->products()->attach($request->products, [
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        return response()->json([], Response::HTTP_OK);
     }
 
     /**
@@ -63,6 +68,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        $order->products()->detach();
         $order->delete();
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
