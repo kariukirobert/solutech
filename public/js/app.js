@@ -2137,24 +2137,111 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "suppliers",
   data: function data() {
     return {
-      suppliers: {}
+      suppliers: {},
+      add_supplier: true,
+      form: {
+        name: ""
+      },
+      errors: {}
     };
   },
   mounted: function mounted() {
-    this.getProducts();
+    this.getSuppliers();
   },
   methods: {
-    getProducts: function getProducts() {// return this.$store.getters.products;
+    getSuppliers: function getSuppliers() {
+      var _this = this;
+
+      axios.get('/api/suppliers').then(function (response) {
+        _this.suppliers = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
-    deleteProduct: function deleteProduct(id) {
-      this.$store.dispatch('deleteProduct', id);
+    addSupplier: function addSupplier() {
+      var _this2 = this;
+
+      axios.post('/api/suppliers', this.form).then(function (response) {
+        window.location.reload();
+      })["catch"](function (error) {
+        _this2.errors = error.response.data.errors;
+        console.log(error);
+      });
+    },
+    editSupplier: function editSupplier(id) {
+      var _this3 = this;
+
+      axios.get("/api/suppliers/".concat(id)).then(function (response) {
+        _this3.form.name = response.data.data.name;
+        _this3.form.quantity = response.data.data.quantity;
+        _this3.form.description = response.data.data.description;
+        _this3.form.supplier_id = id;
+        _this3.add_supplier = false;
+        $('#supplierModal').modal('toggle');
+      })["catch"](function (error) {
+        _this3.errors = error.response.data.errors;
+        console.log(error);
+      });
+    },
+    updateSupplier: function updateSupplier(id) {
+      var _this4 = this;
+
+      axios.put("/api/suppliers/".concat(id), this.form).then(function (response) {
+        window.location.reload();
+      })["catch"](function (error) {
+        _this4.errors = error.response.data.errors;
+        console.log(error);
+      });
+    },
+    deleteSupplier: function deleteSupplier(id) {
+      axios["delete"]("/api/suppliers/".concat(id)).then(function (response) {
+        window.location.reload();
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
-  },
-  computed: {}
+  }
 });
 
 /***/ }),
@@ -38460,73 +38547,178 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "card-body table-responsive" }, [
-        _c("table", { staticClass: "table table-bordered table-hover" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.products, function(product, index) {
-              return _c("tr", { key: product.id }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(" " + _vm._s(index + 1))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(product.name))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-center" }, [
-                  _vm._v(_vm._s(product.products))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.viewProduct(product.id)
-                        }
-                      }
-                    },
-                    [_vm._v("View")]
-                  ),
+        _c(
+          "table",
+          { staticClass: "table table-bordered table-hover table-stripped" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.suppliers, function(supplier, index) {
+                return _c("tr", { key: supplier.id }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v(" " + _vm._s(index + 1))
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.editProduct(product.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Edit")]
-                  ),
+                  _c("td", [_vm._v(_vm._s(supplier.name))]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger n-btn-sm btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteProduct(product.id)
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.editSupplier(supplier.id)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Delete")]
-                  )
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger n-btn-sm btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteSupplier(supplier.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "supplierModal",
+          tabindex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "card mt-1" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col-md-12" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "font-weight-bold",
+                            attrs: { for: "name" }
+                          },
+                          [_vm._v("Name")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.errors.name },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            id: "name",
+                            placeholder: "Name of the supplier"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.name
+                          ? _c("small", { staticClass: "invalid-feedback" }, [
+                              _vm._v(_vm._s(_vm.errors.name[0]))
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-row" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "form-group col-md-12 mt-3 text-center"
+                        },
+                        [
+                          _vm.add_supplier
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary help-block col-4",
+                                  attrs: { type: "submit" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.addSupplier($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Submit Supplier ")]
+                              )
+                            : _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary help-block col-4",
+                                  attrs: { type: "submit" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.updateSupplier(
+                                        _vm.form.supplier_id
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Update Supplier ")]
+                              )
+                        ]
+                      )
+                    ])
+                  ])
                 ])
               ])
-            }),
-            0
-          )
+            ])
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -38540,12 +38732,16 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c(
-        "a",
+        "button",
         {
-          staticClass: "btn btn-action float-right btn-sm mt-1",
-          attrs: { href: "javascript:;" }
+          staticClass: "btn btn-primary float-right btn-sm mt-1",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#supplierModal"
+          }
         },
-        [_vm._v(" Add Supplier")]
+        [_vm._v("\n                Add Supplier\n            ")]
       )
     ])
   },
@@ -38559,12 +38755,33 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-          _vm._v("Products")
-        ]),
-        _vm._v(" "),
         _c("th", { staticClass: "action" }, [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Add Supplier")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
