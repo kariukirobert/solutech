@@ -29,7 +29,6 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = Order::create(['order_number' => Order::generateOrderNumber()]);
-        // return $request->input();
         $order->products()->attach($request->products, [
             'created_at' => now(),
             'updated_at' => now(),
@@ -45,7 +44,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return new SupplierResource($order);
+        return new OrderResource($order);
     }
 
     /**
@@ -57,7 +56,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $order->products()->sync($request->products, [
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        return response()->json([], Response::HTTP_OK);
     }
 
     /**

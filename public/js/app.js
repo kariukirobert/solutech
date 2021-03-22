@@ -1985,9 +1985,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.get("/api/orders/".concat(id)).then(function (response) {
-        _this4.form.name = response.data.data.name;
-        _this4.form.quantity = response.data.data.quantity;
-        _this4.form.description = response.data.data.description;
+        _this4.form.products = response.data.data.products.map(function (product) {
+          return product.name;
+        });
         _this4.form.order_id = id;
         _this4.add_order = false;
         $('#orderModal').modal('toggle');
@@ -2007,7 +2007,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteOrder: function deleteOrder(id) {
-      axios["delete"]("/api/orders/".concat(id)).then(function (response) {// window.location.reload();
+      axios["delete"]("/api/orders/".concat(id)).then(function (response) {
+        window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       });

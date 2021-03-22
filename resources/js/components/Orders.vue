@@ -129,9 +129,7 @@
             },
             editOrder(id) {
                 axios.get(`/api/orders/${id}`).then(response => {
-                    this.form.name = response.data.data.name
-                    this.form.quantity = response.data.data.quantity
-                    this.form.description = response.data.data.description
+                    this.form.products = response.data.data.products.map(product => product.id)
                     this.form.order_id = id
                     this.add_order = false
                     $('#orderModal').modal('toggle')
