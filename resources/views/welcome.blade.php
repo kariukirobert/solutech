@@ -7,12 +7,14 @@
         <title>Solutech</title>
 
         <!-- Default app css -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="https://solutech.herokuapp.com/css/app.css" rel="stylesheet">
+        {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="https://solutech.herokuapp.com/js/app.js" defer></script>
+        {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     </head>
     <body>
