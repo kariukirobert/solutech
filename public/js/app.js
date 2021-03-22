@@ -1924,6 +1924,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "orders",
   data: function data() {
@@ -1986,7 +1997,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/orders/".concat(id)).then(function (response) {
         _this4.form.products = response.data.data.products.map(function (product) {
-          return product.name;
+          return product.id;
         });
         _this4.form.order_id = id;
         _this4.add_order = false;
@@ -2029,6 +2040,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2287,6 +2309,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "suppliers",
   data: function data() {
@@ -2375,10 +2408,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_orders_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/orders.vue */ "./resources/js/components/orders.vue");
 
 
+ // import Mainpage from "./components/App.vue";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
   path: "/",
-  name: "home",
+  name: "products",
   component: _components_products_vue__WEBPACK_IMPORTED_MODULE_0__.default
 }, {
   path: "/products",
@@ -38136,7 +38170,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills nav-justified nav-fill mb-3",
+        attrs: { id: "pills-tab", role: "tablist" }
+      },
+      [
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/products" } },
+              [_vm._v("Products")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link active", attrs: { to: "/orders" } },
+              [_vm._v("Orders")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/suppliers" } },
+              [_vm._v("Suppliers")]
+            )
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "card mt-2 mb-4 card-outline card-info" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -38423,7 +38505,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills nav-justified nav-fill mb-3",
+        attrs: { id: "pills-tab", role: "tablist" }
+      },
+      [
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link active", attrs: { to: "/products" } },
+              [_vm._v("Products")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/orders" } },
+              [_vm._v("Orders")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/suppliers" } },
+              [_vm._v("Suppliers")]
+            )
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "card mt-2 mb-4 card-outline card-info" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -38807,7 +38937,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills nav-justified nav-fill mb-3",
+        attrs: { id: "pills-tab", role: "tablist" }
+      },
+      [
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/products" } },
+              [_vm._v("Products")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/orders" } },
+              [_vm._v("Orders")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link active", attrs: { to: "/suppliers" } },
+              [_vm._v("Suppliers")]
+            )
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "card mt-2 mb-4 card-outline card-info" }, [
       _vm._m(0),
       _vm._v(" "),

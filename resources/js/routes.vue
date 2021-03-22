@@ -3,11 +3,12 @@
 import Products from "./components/products.vue";
 import Suppliers from "./components/suppliers.vue";
 import Orders from "./components/orders.vue";
+// import Mainpage from "./components/App.vue";
 
 export default [
 	{
 		path: "/",
-		name: "home",
+		name: "products",
 		component: Products
 	},
 	{

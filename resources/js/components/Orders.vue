@@ -1,5 +1,16 @@
 <template>
-    <div>
+    <div class="container">
+        <ul class="nav nav-pills nav-justified nav-fill mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <router-link class="nav-link" to="/products">Products</router-link>
+            </li>
+            <li class="nav-item" role="presentation">
+                <router-link class="nav-link active" to="/orders">Orders</router-link>
+            </li>
+            <li class="nav-item" role="presentation">
+                <router-link class="nav-link" to="/suppliers">Suppliers</router-link>
+            </li>
+        </ul>
         <!-- show orders components -->
          <div class="card mt-2 mb-4 card-outline card-info">
             <div class="card-header py-2">
